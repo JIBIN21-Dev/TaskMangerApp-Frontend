@@ -6,6 +6,7 @@
     "analytics": "4188c261-e65d-4691-b293-a1281c302676"
   },
   "newProjectRoot": "projects",
+
   "projects": {
     "taskapp": {
       "projectType": "application",
@@ -13,33 +14,42 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+
       "architect": {
         "build": {
           "builder": "@angular/build:application",
+
           "options": {
             "outputPath": "dist/taskapp/browser",
             "index": "src/index.html",
             "browser": "src/main.ts",
+
             "polyfills": [
               "zone.js"
             ],
+
             "tsConfig": "tsconfig.app.json",
+
             "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
+
             "styles": [
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
+
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
+
           "configurations": {
+
             "production": {
               "budgets": [
                 {
@@ -53,18 +63,30 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+
+              "outputHashing": "all",
+
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
+
             "development": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
             }
           },
+
           "defaultConfiguration": "production"
         },
+
         "serve": {
           "builder": "@angular/build:dev-server",
+
           "configurations": {
             "production": {
               "buildTarget": "taskapp:build:production"
@@ -73,8 +95,10 @@
               "buildTarget": "taskapp:build:development"
             }
           },
+
           "defaultConfiguration": "development"
         },
+
         "test": {
           "builder": "@angular/build:unit-test"
         }
