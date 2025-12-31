@@ -1,0 +1,19 @@
+.admin-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.stat-card {
+  border: none;
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.table-responsive {
+  max-height: 500px;
+  overflow-y: auto;
+}

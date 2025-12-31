@@ -1,0 +1,217 @@
+<div class="tasks-page">
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark bg-primary shadow-sm">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">
+        <i class="bi bi-check2-square"></i> TaskManager
+      </span>
+     <div class="d-flex align-items-center">
+
+  <span class="text-white me-3">
+    <i class="bi bi-person-circle"></i> {{ currentUser }}
+  </span>
+
+  <button 
+    *ngIf="currentUser === 'jibin2121'"
+    class="btn btn-outline-warning btn-sm me-2"
+    (click)="goToAdmin()">
+    <i class="bi bi-shield-lock"></i> Admin
+  </button>
+
+  <button class="btn btn-outline-light btn-sm" (click)="logout()">
+    <i class="bi bi-box-arrow-right"></i> Logout
+  </button>
+
+</div>
+
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <!-- Statistics Cards -->
+    <div class="row g-3 mb-4" *ngIf="statistics">
+      <div class="col-md-3">
+        <div class="card stat-card bg-primary text-white">
+          <div class="card-body">
+            <h6 class="card-title">Total Tasks</h6>
+            <h2 class="mb-0">{{ statistics.total }}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stat-card bg-warning text-white">
+          <div class="card-body">
+            <h6 class="card-title">Pending</h6>
+            <h2 class="mb-0">{{ statistics.pending }}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stat-card bg-success text-white">
+          <div class="card-body">
+            <h6 class="card-title">Completed</h6>
+            <h2 class="mb-0">{{ statistics.completed }}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stat-card bg-danger text-white">
+          <div class="card-body">
+            <h6 class="card-title">Overdue</h6>
+            <h2 class="mb-0">{{ statistics.overdue }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Add Task Form -->
+      <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+              <i class="bi bi-plus-circle"></i> Add New Task
+            </h5>
+          </div>
+          <div class="card-body">
+            <div *ngIf="errorMessage" class="alert alert-danger alert-sm">
+              {{ errorMessage }}
+            </div>
+
+            <form (ngSubmit)="addTask()">
+              <div class="mb-3">
+                <label class="form-label">Title *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  [(ngModel)]="title"
+                  name="title"
+                  placeholder="Enter task title"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea 
+                  class="form-control" 
+                  [(ngModel)]="description"
+                  name="description"
+                  rows="3"
+                  placeholder="Enter description (optional)"
+                ></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Due Date</label>
+                <input 
+                  type="datetime-local" 
+                  class="form-control" 
+                  [(ngModel)]="dueDate"
+                  name="dueDate"
+                />
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100">
+                <i class="bi bi-plus-lg"></i> Add Task
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tasks List -->
+      <div class="col-md-8">
+        <div class="card shadow-sm">
+          <div class="card-header bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">My Tasks ({{ filteredTasks.length }})</h5>
+              
+              <!-- Filter Buttons -->
+              <div class="btn-group btn-group-sm" role="group">
+                <button 
+                  type="button" 
+                  class="btn"
+                  [class.btn-primary]="filter === 'all'"
+                  [class.btn-outline-primary]="filter !== 'all'"
+                  (click)="setFilter('all')"
+                >
+                  All
+                </button>
+                <button 
+                  type="button" 
+                  class="btn"
+                  [class.btn-warning]="filter === 'pending'"
+                  [class.btn-outline-warning]="filter !== 'pending'"
+                  (click)="setFilter('pending')"
+                >
+                  Pending
+                </button>
+                <button 
+                  type="button" 
+                  class="btn"
+                  [class.btn-success]="filter === 'completed'"
+                  [class.btn-outline-success]="filter !== 'completed'"
+                  (click)="setFilter('completed')"
+                >
+                  Completed
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <!-- No Tasks Message -->
+            <div *ngIf="filteredTasks.length === 0" class="text-center py-5 text-muted">
+              <i class="bi bi-inbox" style="font-size: 3rem;"></i>
+              <p class="mt-3">No tasks found. Add your first task!</p>
+            </div>
+
+            <!-- Tasks List -->
+            <div class="list-group list-group-flush">
+              <div 
+                *ngFor="let task of filteredTasks" 
+                class="list-group-item task-item"
+                [class.task-completed]="task.isCompleted"
+              >
+                <div class="d-flex w-100 justify-content-between align-items-start">
+                  <div class="flex-grow-1">
+                    <h6 class="mb-1" [class.text-decoration-line-through]="task.isCompleted">
+                      {{ task.title }}
+                    </h6>
+                    <p class="mb-1 text-muted small" *ngIf="task.description">
+                      {{ task.description }}
+                    </p>
+                    <small class="text-muted" *ngIf="task.dueDate">
+                      <i class="bi bi-calendar"></i> 
+                      {{ task.dueDate | date:'short' }}
+                    </small>
+                  </div>
+                  
+                  <div class="btn-group btn-group-sm ms-2" role="group">
+                    <button 
+                      class="btn"
+                      [class.btn-outline-success]="!task.isCompleted"
+                      [class.btn-outline-secondary]="task.isCompleted"
+                      (click)="toggleComplete(task)"
+                      title="{{ task.isCompleted ? 'Mark as Incomplete' : 'Mark as Complete' }}"
+                    >
+                      <i class="bi" [class.bi-check-circle]="!task.isCompleted" [class.bi-arrow-counterclockwise]="task.isCompleted"></i>
+                    </button>
+                    <button 
+                      class="btn btn-outline-danger"
+                      (click)="deleteTask(task.id)"
+title="Delete Task"
+>
+<i class="bi bi-trash"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+  </div>
+</div>

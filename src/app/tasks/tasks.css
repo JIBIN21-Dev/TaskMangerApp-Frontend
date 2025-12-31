@@ -1,0 +1,38 @@
+.tasks-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.stat-card {
+  border: none;
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.task-item {
+  border-left: 4px solid #007bff;
+  transition: all 0.3s;
+}
+
+.task-item:hover {
+  background-color: #f8f9fa;
+  transform: translateX(5px);
+}
+
+.task-completed {
+  border-left-color: #28a745;
+  background-color: #f1f8f4;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+}
+
+.btn-group-sm .btn {
+  padding: 0.25rem 0.5rem;
+}

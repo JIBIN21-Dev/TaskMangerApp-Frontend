@@ -1,0 +1,86 @@
+<div class="home-container">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <i class="bi bi-check2-square"></i> TaskManager
+      </a>
+      <div class="ms-auto">
+        <button class="btn btn-outline-light me-2" (click)="goToLogin()">
+          Login
+        </button>
+        <button class="btn btn-light" (click)="goToRegister()">
+          Sign Up
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="container text-center">
+      <h1 class="display-3 fw-bold mb-4">
+        Manage Your Tasks Efficiently
+      </h1>
+      <p class="lead mb-5">
+        Simple, powerful task management system built with Angular and .NET
+      </p>
+      <div>
+        <button class="btn btn-primary btn-lg me-3" (click)="goToRegister()">
+          <i class="bi bi-person-plus"></i> Get Started
+        </button>
+        <button class="btn btn-outline-primary btn-lg" (click)="goToLogin()">
+          <i class="bi bi-box-arrow-in-right"></i> Login
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="features-section py-5">
+    <div class="container">
+      <h2 class="text-center mb-5">Features</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 text-center p-4 border-0 shadow-sm">
+            <div class="card-body">
+              <i class="bi bi-lightning-charge text-primary" style="font-size: 3rem;"></i>
+              <h5 class="card-title mt-3">Fast & Easy</h5>
+              <p class="card-text text-muted">
+                Create and manage tasks in seconds
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 text-center p-4 border-0 shadow-sm">
+            <div class="card-body">
+              <i class="bi bi-shield-check text-success" style="font-size: 3rem;"></i>
+              <h5 class="card-title mt-3">Secure</h5>
+              <p class="card-text text-muted">
+                Your data is protected with JWT authentication
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 text-center p-4 border-0 shadow-sm">
+            <div class="card-body">
+              <i class="bi bi-phone text-info" style="font-size: 3rem;"></i>
+              <h5 class="card-title mt-3">Responsive</h5>
+              <p class="card-text text-muted">
+                Works perfectly on all devices
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-4 mt-5">
+    <p class="mb-0">© 2025 TaskManager - Built by Jibin Biju</p>
+    
+  </footer>
+</div>

@@ -1,0 +1,126 @@
+<div class="admin-page">
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark bg-danger">
+    <div class="container-fluid">
+      <span class="navbar-brand">
+        <i class="bi bi-shield-lock-fill"></i> Admin Dashboard
+      </span>
+      <div class="d-flex align-items-center">
+        <span class="text-white me-3">
+          <i class="bi bi-person-circle"></i> {{ currentUser }}
+        </span>
+        <button class="btn btn-outline-light btn-sm me-2" (click)="goBack()">
+          <i class="bi bi-arrow-left"></i> Back
+        </button>
+        <button class="btn btn-outline-light btn-sm" (click)="logout()">
+          <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <!-- Loading -->
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary"></div>
+      <p class="mt-3">Loading admin data...</p>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div *ngIf="!loading && statistics" class="row g-4 mb-4">
+      <div class="col-md-3">
+        <div class="card stat-card bg-primary text-white">
+          <div class="card-body">
+            <h6 class="card-title">
+              <i class="bi bi-people-fill"></i> Total Users
+            </h6>
+            <h2 class="mb-0">{{ statistics.totalUsers }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card stat-card bg-success text-white">
+          <div class="card-body">
+            <h6 class="card-title">
+              <i class="bi bi-person-check-fill"></i> Active Users
+            </h6>
+            <h2 class="mb-0">{{ statistics.activeUsers }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card stat-card bg-info text-white">
+          <div class="card-body">
+            <h6 class="card-title">
+              <i class="bi bi-list-task"></i> Total Tasks
+            </h6>
+            <h2 class="mb-0">{{ statistics.totalTasks }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card stat-card bg-warning text-white">
+          <div class="card-body">
+            <h6 class="card-title">
+              <i class="bi bi-check-circle-fill"></i> Completed
+            </h6>
+            <h2 class="mb-0">{{ statistics.completedTasks }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Registrations -->
+    <div *ngIf="!loading && statistics" class="card mb-4">
+      <div class="card-header bg-white">
+        <h5 class="mb-0">Recent Registrations (Last 7 Days)</h5>
+      </div>
+      <div class="card-body">
+        <div *ngFor="let reg of statistics.recentRegistrations" class="d-flex justify-content-between align-items-center mb-2">
+          <span>{{ reg.date | date:'mediumDate' }}</span>
+          <span class="badge bg-primary">{{ reg.count }} users</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Users Table -->
+    <div *ngIf="!loading" class="card">
+      <div class="card-header bg-white">
+        <h5 class="mb-0">All Registered Users ({{ users.length }})</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Tasks</th>
+                <th>Joined</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>
+                  <span class="badge bg-info">{{ user.username }}</span>
+                </td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <span class="badge bg-success">{{ user.taskCount }} tasks</span>
+                </td>
+                <td>{{ user.createdAt | date:'short' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
